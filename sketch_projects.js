@@ -97,7 +97,6 @@ function draw() {
       basetrail.update(dnabase);
       basetrail.show(dnabase);
       //basetrailrna.show(rnabase);
-
     }
  }
 }
