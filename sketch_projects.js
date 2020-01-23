@@ -27,6 +27,7 @@ var input;
 var jsonhere; //if this is true, means data got succesfully loaded. , then you can start shaping DNA fasta
 var nucdatahere;
 var startdrawing;
+var nothingtodraw;
 var apibase="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 var apikey="&api_key=67440c4bd547d9933874db2cfb7810390d08";
 var fastafile;
@@ -60,7 +61,7 @@ function setup() {
    }
  }
  input=select('#nucleotide');
- var buttonclear = select('#clear');
+ var buttonclear = select('#clearing');
  buttonclear.touchStarted(cleared);
 
 }
@@ -72,7 +73,7 @@ function draw() {
     //console.log('heloooooooo')
     fill(infotextclr);
     textFont(basefont);
-    text("We found this nucleotide squence: ");
+    text("We found this nucleotide sequence: ");
     text(fastatitle, 40, windowHeight-40);
     dnabase = jdna.charAt(i);
     rnabase = jrna.charAt(i);
@@ -88,7 +89,7 @@ function draw() {
           noLoop();
       }
       i = i+1;
-    }
+     }
       /*
       //if AUG detected in rna then I should display Ribosome.
       //Should also redraw the old ribosomes...
@@ -108,13 +109,27 @@ function draw() {
       basetrail.show(dnabase);
       //basetrailrna.show(rnabase);
     }
+
+ }
+ else if (nothingtodraw){
+   fill(infotextclr);
+   fill(100);
+   textFont(basefont);
+   text("Unfortunately couldn't find that...");
+   console.log('hello2');
+   noLoop();
+   noFill();
  }
 }
 
 function eutilSearch(){ //NCBI Esearch
   query = input.value()+"[orgn]";
   var searchurl=apibase+"esearch.fcgi?db=nucleotide&retmode=json&rettype=json&term="+query+apikey+"&usehistory=y";
-  loadJSON(searchurl,gotSome); //console.log('ok');
+  loadJSON(searchurl,gotSome, gotError); console.log('ok');
+}
+function gotError(){
+  console.log("nothing found error");
+  nothingtodraw=true;
 }
 function gotSome(data){
   console.log('Searching...');
@@ -124,9 +139,18 @@ function gotSome(data){
     //var querykey=jsonhere.esearchresult.querykey;
     //var fetchurl=apibase+"efetch.fcgi?db=nucleotide&WebEnv="+webenv+"&query_key="+querykey+"&rettype=fasta&retmode=text&retmax=1"+apikey;
     var id=jsonhere.esearchresult.idlist[0];
-    var fetchurl=apibase+"efetch.fcgi?db=nucleotide&id="+id+"&rettype=fasta&retmode=text"+apikey;
-    //console.log(fetchurl)
-    loadStrings(fetchurl,gotData);
+    if(id == null){
+      console.log("nothing found");
+      nothingtodraw=true;
+    }
+    else {
+      console.log(id);
+      var fetchurl=apibase+"efetch.fcgi?db=nucleotide&id="+id+"&rettype=fasta&retmode=text"+apikey;
+      //console.log(fetchurl)
+      loadStrings(fetchurl,gotData);
+      //console.log('you prick...');
+    }
+
   }
 }
 function gotData(fastafile){
@@ -139,8 +163,6 @@ function gotData(fastafile){
     console.log(fastatitle)
     var rawdna=fastafile.slice(1);
     jdna = join(rawdna,'');
-    //console.log(jdna);
-    //console.log(jdna.length);
     console.log('Converted into DNA.')
     //convert DNA string into RNA string
     var rna1=jdna.replace(/A/g,"U");
@@ -148,11 +170,8 @@ function gotData(fastafile){
     var rna3=rna2.replace(/C/g,"F");
     var rna4=rna3.replace(/G/g,"C");
     jrna=rna4.replace(/F/g,"G");
-    //console.log(jrna);
-    //console.log(jrna.length);
     console.log('Converted into RNA.')
-    //make a list of all startcodon position indices
-    var idx = 0;
+    var idx = 0;//make a list of all startcodon position indices
     for (idx = 0; (idx = jrna.indexOf("AUG", idx)) >= 0; idx++){
       startcodons.push(idx);
     }
