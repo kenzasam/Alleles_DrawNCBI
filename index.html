@@ -9,23 +9,38 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.16/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.16/addons/p5.dom.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.16/addons/p5.sound.js"></script>-->
-    <script src="../p5.js"></script>
-    <script src="../p5.dom.js"></script>
+    <script src="p5.js"></script>
+    <script src="p5.dom.js"></script>
     <script src="sketch_projects.js"></script>
   </head>
   <body>
-    <div class="instructions">
-      Instructions:<br>
-      Search for an animal, tissue, cell line, gene... f.e. mus musculus!<br>
-      Touch to draw DNA<br>
-      Two fingers to make RNA <br>
+    <div class="about">
+      <h1>ALLE(le)S</h1>
+      By Kenza Samlali
+      <h2>About</h2>
+      Alle(le)s is an interactive web app that allows you <br>
+      to experience the simplicity and raw form of life: nucleotides.<br>
+      All of life's genetic information consists in its purest form<br>
+      of a string of nucleotides (A, C, T, G bases).<br>
+      A huge database called NCBI contains sequences of millions of living organisms.<br>
+      Use this WebApp to search it,<br>
+      and to draw out a string of nucleotides to experience the length of these sequences <br>
     </div>
-    <div class="search">
-      Search: <input id="nucleotide" value=""></input>
-      <br><br>
-      <button id="submit">submit</button>
-      <button id="clear">clear canvas</button>
-      <br>
+    <div class="searchblock">
+      <div class="instructions">
+        <h2>Instructions:</h2><br>
+        Search the nucleotide database for an animal, tissue, cell line, gene...<br>
+        Example: mus musculus <br>
+        Drag to draw DNA<br>
+        Drag Two fingers to make RNA <br>
+      </div>
+      <div class="search">
+        Search: <input id="nucleotide" value=""></input>
+        <br><br>
+        <button id="submit">submit</button>
+        <button id="clear">clear canvas</button>
+        <br>
+      </div>
     </div>
   </body>
 </html>

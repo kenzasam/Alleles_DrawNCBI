@@ -19,20 +19,27 @@ button {
  font-size: 16px;
 }
 
-.instructions{
+
+
+.about{
   display: inline-block;
   padding: 5px;
-  background-color: rgba(255, 255, 255, 0.3);
   top: 10px;
   left: 10px;
 }
 
 .search{
+  padding: 5px;
+}
+.instructions{
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.searchblock{
   position:absolute;
   bottom: 10px;
   right: 10px;
 }
-
 h1 {
   font-family: "Verdana", Verdana, serif;
   color: #EFF9F9;

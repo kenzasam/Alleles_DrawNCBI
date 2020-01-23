@@ -10,6 +10,7 @@ var clrA='#91DFAA';
 var clrC='#5FACA3';
 var clrT='#1E796F';
 var clrG='#E35B96';
+var infotextclr= '#EFF9F9';
 var clr ;
 var f ;
 var basefont;
@@ -51,16 +52,25 @@ function setup() {
  //actions when button is pressed, in index.html
  var buttonsubmit = select('#submit');
  buttonsubmit.touchStarted(eutilSearch);
+ document.getElementById('nucleotide').onkeypress= function(e){
+   if (!e)e= window.event;
+   var keycode = e.key || e.which;
+   if (keycode == "Enter"){ //enter pressed
+     eutilSearch();
+   }
+ }
  input=select('#nucleotide');
  var buttonclear = select('#clear');
  buttonclear.touchStarted(cleared);
+
 }
+
 function draw() {
   background('#22242D')
   fill(100);
   if (startdrawing){
     //console.log('heloooooooo')
-    fill(100);
+    fill(infotextclr);
     textFont(basefont);
     text("We found this nucleotide squence: ");
     text(fastatitle, 40, windowHeight-40);
@@ -100,6 +110,7 @@ function draw() {
     }
  }
 }
+
 function eutilSearch(){ //NCBI Esearch
   query = input.value()+"[orgn]";
   var searchurl=apibase+"esearch.fcgi?db=nucleotide&retmode=json&rettype=json&term="+query+apikey+"&usehistory=y";
